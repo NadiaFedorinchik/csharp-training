@@ -33,7 +33,7 @@ namespace WebAddressbookTests
             }
             //Assert.AreEqual("", verificationErrors.ToString());
         }
-
+        
         protected void OpenHomePage()
         {
             driver.Navigate().GoToUrl(baseURL);
@@ -96,6 +96,30 @@ namespace WebAddressbookTests
         protected void RemoveGroup()
         {
             driver.FindElement(By.Name("delete")).Click();
+        }
+        protected void ReturnToHomepage()
+        {
+            driver.FindElement(By.LinkText("home page")).Click();
+        }
+
+        protected void SubmitContactCreation()
+        {
+            driver.FindElement(By.XPath("//div[@id='content']/form/input[20]")).Click();
+        }
+
+        protected void FillContactForm(ContactData contact)
+        {
+            driver.FindElement(By.Name("firstname")).Click();
+            driver.FindElement(By.Name("firstname")).Clear();
+            driver.FindElement(By.Name("firstname")).SendKeys(contact.FirstName);
+            driver.FindElement(By.Name("lastname")).Click();
+            driver.FindElement(By.Name("lastname")).Clear();
+            driver.FindElement(By.Name("lastname")).SendKeys(contact.LastName);
+        }
+
+        protected void GoToAddNewPage()
+        {
+            driver.FindElement(By.LinkText("add new")).Click(); ;
         }
     }
 }
