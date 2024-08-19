@@ -11,7 +11,6 @@ namespace WebAddressbookTests
             ContactData contact = new ContactData("Kate", "Winslet");
             
             app.ContactHelper.Create(contact);
-            app.Navigator.ReturnToHomepage();
             app.Auth.Logout();
         }
 
@@ -21,7 +20,6 @@ namespace WebAddressbookTests
             ContactData contact = new ContactData("", "");
 
             app.ContactHelper.Create(contact);
-            app.Navigator.ReturnToHomepage();
             app.Auth.Logout();
         }
     }
