@@ -8,9 +8,9 @@ namespace WebAddressbookTests
         [Test]
         public void GroupModificationTest()
         {
-            GroupData newData = new GroupData("e");
-            newData.Header = "f";
-            newData.Footer = "g";
+            GroupData newData = new GroupData("h");
+            newData.Header = "i";
+            newData.Footer = null;
 
             app.GroupHelper.Modify(1, newData);
             app.Auth.Logout();
