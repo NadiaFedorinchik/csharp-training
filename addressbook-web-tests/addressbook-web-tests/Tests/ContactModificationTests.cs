@@ -11,7 +11,6 @@ namespace WebAddressbookTests
             ContactData newData = new ContactData("Leo", "DiCaprio");
 
             app.ContactHelper.Modify(2, newData);
-            app.Auth.Logout();
         }
     }
 }

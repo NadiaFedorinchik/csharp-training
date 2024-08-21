@@ -13,7 +13,6 @@ namespace WebAddressbookTests
             newData.Footer = null;
 
             app.GroupHelper.Modify(1, newData);
-            app.Auth.Logout();
         }
     }
 }

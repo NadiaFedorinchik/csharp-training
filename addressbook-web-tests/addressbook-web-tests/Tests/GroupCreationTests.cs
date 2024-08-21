@@ -13,7 +13,6 @@ namespace WebAddressbookTests
             group.Footer = "c";
 
             app.GroupHelper.Create(group);
-            app.Auth.Logout();
         }
 
         [Test]
@@ -24,7 +23,6 @@ namespace WebAddressbookTests
             group.Footer = "";
 
             app.GroupHelper.Create(group);
-            app.Auth.Logout();
         }
     }
 }

@@ -9,7 +9,6 @@ namespace WebAddressbookTests
         public void ContactRemovalTest()
         {
             app.ContactHelper.Remove(2);
-            app.Auth.Logout();
         }
     }
 }
