@@ -17,6 +17,11 @@ namespace WebAddressbookTests
 
         public void GoToGroupsPage()
         {
+            if (driver.Url == baseURL + "/group.php" 
+                && IsElementPresent(By.LinkText("new")))
+            {
+                return;
+            }
             driver.FindElement(By.LinkText("groups")).Click();
         }
 
@@ -32,6 +37,10 @@ namespace WebAddressbookTests
 
         public void ReturnToHomepage()
         {
+            if (driver.Url == baseURL)
+            {
+                return;
+            }
             driver.FindElement(By.LinkText("home page")).Click();
         }
     }

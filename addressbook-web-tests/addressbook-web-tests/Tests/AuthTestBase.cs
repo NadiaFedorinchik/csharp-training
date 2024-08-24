@@ -5,8 +5,6 @@ namespace WebAddressbookTests
     public class AuthTestBase : TestBase
     {
 
-        protected ApplicationManager app;
-
         [SetUp]
         public void SetupLogin()
         {
