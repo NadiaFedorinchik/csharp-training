@@ -36,6 +36,21 @@ namespace WebAddressbookTests
             List<GroupData> newGroups = app.GroupHelper.GetGroupList();
             Assert.AreEqual(oldGroups.Count + 1, newGroups.Count);
         }
+
+        [Test]
+        public void BadNameGroupCreationTest()
+        {
+            GroupData group = new GroupData("a'a");
+            group.Header = "";
+            group.Footer = "";
+
+            List<GroupData> oldGroups = app.GroupHelper.GetGroupList();
+
+            app.GroupHelper.Create(group);
+
+            List<GroupData> newGroups = app.GroupHelper.GetGroupList();
+            Assert.AreEqual(oldGroups.Count + 1, newGroups.Count);
+        }
     }
 }
 
