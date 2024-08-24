@@ -12,7 +12,7 @@ namespace WebAddressbookTests
             newData.Header = "i";
             newData.Footer = null;
 
-            app.GroupHelper.Modify(1, newData);
+            app.GroupHelper.Modify(0, newData);
         }
     }
 }
