@@ -1,4 +1,6 @@
 ﻿using NUnit.Framework;
+using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace WebAddressbookTests
 {
@@ -12,7 +14,12 @@ namespace WebAddressbookTests
             group.Header = "b";
             group.Footer = "c";
 
+            List<GroupData> oldGroups = app.GroupHelper.GetGroupList();
+
             app.GroupHelper.Create(group);
+
+            List<GroupData> newGroups = app.GroupHelper.GetGroupList();
+            Assert.AreEqual(oldGroups.Count + 1, newGroups.Count);
         }
 
         [Test]
@@ -22,7 +29,12 @@ namespace WebAddressbookTests
             group.Header = "";
             group.Footer = "";
 
+            List<GroupData> oldGroups = app.GroupHelper.GetGroupList();
+
             app.GroupHelper.Create(group);
+
+            List<GroupData> newGroups = app.GroupHelper.GetGroupList();
+            Assert.AreEqual(oldGroups.Count + 1, newGroups.Count);
         }
     }
 }
