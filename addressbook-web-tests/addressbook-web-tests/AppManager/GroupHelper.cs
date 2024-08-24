@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
 
 namespace WebAddressbookTests
 {
@@ -26,6 +25,8 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToGroupsPage();
 
+            CreateNewGroupIfZeroPresent();
+
             SelectGroup(v);
             InitGroupModification();
             FillGroupForm(newData);
@@ -38,6 +39,8 @@ namespace WebAddressbookTests
 
         public GroupHelper Remove(int v)
         {
+            CreateNewGroupIfZeroPresent();
+
             manager.Navigator.GoToGroupsPage();
 
             SelectGroup(v);
@@ -46,6 +49,24 @@ namespace WebAddressbookTests
             manager.Navigator.ReturnToGroupsPage();
 
             return this;
+        }
+
+        public GroupHelper CreateNewGroupIfZeroPresent()
+        {
+            if (!IsAtLeastOneGroupPresent())
+            {
+                GroupData group = new GroupData("a");
+                group.Header = "b";
+                group.Footer = "c";
+
+                Create(group);
+            }
+            return this;
+        }
+
+        public bool IsAtLeastOneGroupPresent()
+        {
+            return IsElementPresent(By.XPath("//div[@id='content']/form/span[1]/input"));
         }
 
         public GroupHelper InitGroupCreation()
