@@ -10,6 +10,7 @@ namespace WebAddressbookTests
         public void GroupRemovalTest()
         {
             app.GroupHelper.CreateNewGroupIfZeroPresent();
+
             List<GroupData> oldGroups = app.GroupHelper.GetGroupList();
 
             app.GroupHelper.Remove(0);

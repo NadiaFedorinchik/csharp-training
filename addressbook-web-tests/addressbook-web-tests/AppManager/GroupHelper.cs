@@ -26,8 +26,6 @@ namespace WebAddressbookTests
         {
             manager.Navigator.GoToGroupsPage();
 
-            CreateNewGroupIfZeroPresent();
-
             SelectGroup(index);
             InitGroupModification();
             FillGroupForm(newData);
@@ -40,8 +38,6 @@ namespace WebAddressbookTests
 
         public GroupHelper Remove(int index)
         {
-            CreateNewGroupIfZeroPresent();
-
             manager.Navigator.GoToGroupsPage();
 
             SelectGroup(index);
@@ -54,6 +50,8 @@ namespace WebAddressbookTests
 
         public GroupHelper CreateNewGroupIfZeroPresent()
         {
+            manager.Navigator.GoToGroupsPage();
+
             if (!IsAtLeastOneGroupPresent())
             {
                 GroupData group = new GroupData("a");

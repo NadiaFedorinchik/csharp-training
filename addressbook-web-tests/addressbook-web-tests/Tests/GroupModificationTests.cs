@@ -13,6 +13,8 @@ namespace WebAddressbookTests
             newData.Header = "i";
             newData.Footer = null;
 
+            app.GroupHelper.CreateNewGroupIfZeroPresent();
+
             List<GroupData> oldGroups = app.GroupHelper.GetGroupList();
 
             app.GroupHelper.Modify(0, newData);

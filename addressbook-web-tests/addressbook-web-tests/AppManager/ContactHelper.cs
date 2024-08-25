@@ -11,6 +11,7 @@ namespace WebAddressbookTests
 
         public ContactHelper Create(ContactData contact)
         {
+            manager.Navigator.OpenHomePage();
             manager.Navigator.GoToAddNewPage();
 
             FillContactForm(contact);
@@ -23,8 +24,7 @@ namespace WebAddressbookTests
 
         public ContactHelper Modify(int rowNumber, ContactData newData)
         {
-
-            CreateNewContactIfZeroPresent();
+            manager.Navigator.OpenHomePage();
 
             InitContactModification(rowNumber);
             FillContactForm(newData);
@@ -37,7 +37,7 @@ namespace WebAddressbookTests
 
         public ContactHelper Remove(int rowNumber)
         {
-            CreateNewContactIfZeroPresent();
+            manager.Navigator.OpenHomePage();
 
             SelectContact(rowNumber);
             RemoveContact();
@@ -47,6 +47,8 @@ namespace WebAddressbookTests
 
         public ContactHelper CreateNewContactIfZeroPresent()
         {
+            manager.Navigator.OpenHomePage();
+
             if (!IsAtLeastOneContactPresent())
             {
                 Create(new ContactData("James", "Cameron"));
