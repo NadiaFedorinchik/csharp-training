@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using System.Collections.Generic;
 
 namespace WebAddressbookTests
 {
@@ -9,8 +10,13 @@ namespace WebAddressbookTests
         public void ContactCreationTest()
         {
             ContactData contact = new ContactData("Kate", "Winslet");
-            
+
+            List<ContactData> oldContacts = app.ContactHelper.GetContactList();
+
             app.ContactHelper.Create(contact);
+
+            List<ContactData> newContacts = app.ContactHelper.GetContactList();
+            Assert.AreEqual(oldContacts.Count + 1, newContacts.Count);
         }
 
         [Test]
@@ -18,7 +24,13 @@ namespace WebAddressbookTests
         {
             ContactData contact = new ContactData("", "");
 
+            List<ContactData> oldContacts = app.ContactHelper.GetContactList();
+
             app.ContactHelper.Create(contact);
+
+            List<ContactData> newContacts = app.ContactHelper.GetContactList();
+
+            Assert.AreEqual(oldContacts.Count + 1, newContacts.Count);
         }
     }
 }

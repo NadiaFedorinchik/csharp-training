@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using System;
 using System.Collections.Generic;
 
 namespace WebAddressbookTests
@@ -23,13 +22,13 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public GroupHelper Modify(int v, GroupData newData)
+        public GroupHelper Modify(int index, GroupData newData)
         {
             manager.Navigator.GoToGroupsPage();
 
             CreateNewGroupIfZeroPresent();
 
-            SelectGroup(v);
+            SelectGroup(index);
             InitGroupModification();
             FillGroupForm(newData);
             SubmitGroupModification();
@@ -39,13 +38,13 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public GroupHelper Remove(int v)
+        public GroupHelper Remove(int index)
         {
             CreateNewGroupIfZeroPresent();
 
             manager.Navigator.GoToGroupsPage();
 
-            SelectGroup(v);
+            SelectGroup(index);
             RemoveGroup();
 
             manager.Navigator.ReturnToGroupsPage();

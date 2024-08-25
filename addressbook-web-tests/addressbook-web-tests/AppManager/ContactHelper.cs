@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System.Collections.Generic;
 
 namespace WebAddressbookTests
 {
@@ -48,14 +49,14 @@ namespace WebAddressbookTests
         {
             if (!IsAtLeastOneContactPresent())
             {
-                Create(new ContactData("Kate", "Winslet"));
+                Create(new ContactData("James", "Cameron"));
             }
             return this;
         }
 
         public bool IsAtLeastOneContactPresent()
         {
-            return IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[1]/td[1]/input"));
+            return IsElementPresent(By.XPath("//table[@id='maintable']/tbody/tr[2]/td[1]/input"));
         }
 
         public ContactHelper InitGroupCreation()
@@ -102,6 +103,20 @@ namespace WebAddressbookTests
         private void SubmitContactModification()
         {
             driver.FindElement(By.XPath("//div[@id='content']/form/input[@name='update']")).Click();
+        }
+
+        internal List<ContactData> GetContactList()
+        {
+            List<ContactData> contacts = new List<ContactData>();
+
+            manager.Navigator.OpenHomePage();
+            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name=entry]"));
+
+            foreach (IWebElement element in elements)
+            {
+                contacts.Add(new ContactData(element.Text));
+            }
+            return contacts;
         }
     }
 }
