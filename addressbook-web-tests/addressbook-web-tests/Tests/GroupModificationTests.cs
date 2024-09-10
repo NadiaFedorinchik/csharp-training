@@ -20,8 +20,10 @@ namespace WebAddressbookTests
             app.GroupHelper.Modify(0, newData);
 
             List<GroupData> newGroups = app.GroupHelper.GetGroupList();
-
-            Assert.AreNotEqual(oldGroups, newGroups);
+            oldGroups[0].Name = newData.Name;
+            oldGroups.Sort();
+            newGroups.Sort();
+            Assert.AreEqual(oldGroups, newGroups);
         }
     }
 }

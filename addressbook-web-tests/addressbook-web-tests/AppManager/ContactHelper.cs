@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using System;
 using System.Collections.Generic;
 
 namespace WebAddressbookTests
@@ -112,12 +113,24 @@ namespace WebAddressbookTests
             List<ContactData> contacts = new List<ContactData>();
 
             manager.Navigator.OpenHomePage();
-            ICollection<IWebElement> elements = driver.FindElements(By.CssSelector("tr[name=entry]"));
 
-            foreach (IWebElement element in elements)
+            IWebElement resultNumber = driver.FindElement(By.XPath("//*[@id=\"search_count\"]"));
+
+            int contactsAmount = Int32.Parse(resultNumber.Text);
+
+            for (int i = 2; i <= contactsAmount; i++)
             {
-                contacts.Add(new ContactData(element.Text));
+                IWebElement lastName = driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + i + "]/td[2]"));
+                string elementLastName = lastName.Text;
+                
+                IWebElement firstName = driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + i + "]/td[3]"));
+                string elementFirstName = firstName.Text;
+
+                ContactData contact = new ContactData(elementFirstName, elementLastName);
+
+                contacts.Add(contact);
             }
+
             return contacts;
         }
     }

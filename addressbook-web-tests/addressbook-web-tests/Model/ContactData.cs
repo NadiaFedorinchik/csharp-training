@@ -1,23 +1,16 @@
-﻿
-using System;
+﻿using System;
 
 namespace WebAddressbookTests
 {
-    public class ContactData
+    public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string firstName;
         private string lastName;
-        private string fullName;
 
         public ContactData(string firstName, string lastName)
         {
             this.firstName = firstName;
             this.lastName = lastName;
-        }
-
-        public ContactData(string fullName)
-        {
-            this.fullName = fullName;
         }
 
         public bool Equals(ContactData other)
@@ -26,12 +19,27 @@ namespace WebAddressbookTests
 
             if (Object.ReferenceEquals(this, other)) return true;
 
-            return fullName == other.fullName;
+            return FirstName == other.FirstName;
         }
 
-        public int GetHashcode()
+        public override int GetHashCode()
         {
-            return fullName.GetHashCode();
+            return FirstName.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return "first name=" + FirstName;
+        }
+
+        public int CompareTo(ContactData other)
+        {
+            if (Object.ReferenceEquals(other, null))
+            {
+                return 1;
+            }
+
+            return FirstName.CompareTo(other.FirstName);
         }
 
         public string FirstName

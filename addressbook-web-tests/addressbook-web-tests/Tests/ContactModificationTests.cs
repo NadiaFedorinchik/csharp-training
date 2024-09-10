@@ -18,8 +18,11 @@ namespace WebAddressbookTests
             app.ContactHelper.Modify(2, newData);
 
             List<ContactData> newContacts = app.ContactHelper.GetContactList();
-
-            Assert.AreNotEqual(oldContacts, newContacts);
+            oldContacts[0].FirstName = newData.FirstName;
+            oldContacts[0].LastName = newData.LastName;
+            oldContacts.Sort();
+            newContacts.Sort();
+            Assert.AreEqual(oldContacts, newContacts);
         }
     }
 }

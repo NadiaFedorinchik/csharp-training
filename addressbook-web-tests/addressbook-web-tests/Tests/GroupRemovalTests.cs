@@ -18,7 +18,8 @@ namespace WebAddressbookTests
             List<GroupData> newGroups = app.GroupHelper.GetGroupList();
 
             oldGroups.RemoveAt(0);
-
+            oldGroups.Sort();
+            newGroups.Sort();
             Assert.AreEqual(oldGroups, newGroups);
         }
     }
