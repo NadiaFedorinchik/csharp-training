@@ -108,7 +108,7 @@ namespace WebAddressbookTests
             driver.FindElement(By.XPath("//div[@id='content']/form/input[@name='update']")).Click();
         }
 
-        internal List<ContactData> GetContactList()
+        public List<ContactData> GetContactList()
         {
             List<ContactData> contacts = new List<ContactData>();
 
