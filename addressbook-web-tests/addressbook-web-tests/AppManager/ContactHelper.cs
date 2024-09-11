@@ -125,14 +125,13 @@ namespace WebAddressbookTests
                 for (int i = 2; i <= contactsAmount + 1; i++)
                 {
                     IWebElement lastName = driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + i + "]/td[2]"));
-                    string elementLastName = lastName.Text;
 
                     IWebElement firstName = driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + i + "]/td[3]"));
-                    string elementFirstName = firstName.Text;
 
-                    ContactData contact = new ContactData(elementFirstName, elementLastName);
-
-                    contactCache.Add(contact);
+                    contactCache.Add(new ContactData(firstName.Text, lastName.Text)
+                    {
+                        Id = driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + i + "]/td[1]")).FindElement(By.TagName("input")).GetAttribute("id")
+                    });
                 }
 
             }
