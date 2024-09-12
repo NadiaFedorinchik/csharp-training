@@ -5,6 +5,7 @@ namespace WebAddressbookTests
     public class ContactData : IEquatable<ContactData>, IComparable<ContactData>
     {
         private string allPhones;
+        private string allEmails;
 
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -14,6 +15,8 @@ namespace WebAddressbookTests
         public string MobilePhone { get; set; }
         public string WorkPhone { get; set; }
         public string Email { get; set; }
+        public string Email2 { get; set; }
+        public string Email3 { get; set; }
         public string AllPhones
         {
             get
@@ -24,7 +27,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (Cleanup(HomePhone) + Cleanup(MobilePhone) + Cleanup(WorkPhone)).Trim();
+                    return (CleanupPhone(HomePhone) + CleanupPhone(MobilePhone) + CleanupPhone(WorkPhone)).Trim();
                 }
             }
             set
@@ -32,8 +35,26 @@ namespace WebAddressbookTests
                 allPhones = value;
             }
         }
+        public string AllEmails
+        {
+            get
+            {
+                if (allEmails != null)
+                {
+                    return allEmails;
+                }
+                else
+                {
+                    return (CleanupEmail(Email) + CleanupEmail(Email2) + CleanupEmail(Email3)).Trim();
+                }
+            }
+            set
+            {
+                allEmails = value;
+            }
+        }
 
-        public string Cleanup(string phone)
+        public string CleanupPhone(string phone)
         {
             if (phone == null || phone == "")
             {
@@ -42,6 +63,18 @@ namespace WebAddressbookTests
             else
             {
                 return phone.Replace(" ", "").Replace("-", "").Replace("(", "").Replace(")", "") + "\r\n";
+            }
+        }
+
+        public string CleanupEmail(string email)
+        {
+            if (email == null || email == "")
+            {
+                return "";
+            }
+            else
+            {
+                return email.Replace(" ", "") + "\r\n";
             }
         }
 
