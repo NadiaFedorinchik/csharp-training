@@ -139,6 +139,8 @@ namespace WebAddressbookTests
 
         public int GetContactCount()
         {
+            manager.Navigator.OpenHomePage();
+
             return driver.FindElements(By.XPath("//table[@id='maintable']/tbody/tr")).Count - 1;
         }
 
