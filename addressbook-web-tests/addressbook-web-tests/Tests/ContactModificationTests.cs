@@ -16,7 +16,7 @@ namespace WebAddressbookTests
             List<ContactData> oldContacts = app.ContactHelper.GetContactList();
             ContactData oldData = oldContacts[0];
 
-            app.ContactHelper.Modify(1, newData);
+            app.ContactHelper.Modify(0, newData);
 
             Assert.AreEqual(oldContacts.Count, app.ContactHelper.GetContactCount());
 
