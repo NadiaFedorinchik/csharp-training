@@ -109,6 +109,11 @@ namespace WebAddressbookTests
             return this;
         }
 
+        public void OpenContactDetailsPage(int index)
+        {
+            driver.FindElements(By.Name("entry"))[index].FindElements(By.TagName("td"))[6].FindElement(By.TagName("a")).Click();
+        }
+
         private List<ContactData> contactCache = null;
 
         public List<ContactData> GetContactList()
@@ -171,25 +176,52 @@ namespace WebAddressbookTests
             InitContactModification(index);
 
             string firstName = driver.FindElement(By.Name("firstname")).GetAttribute("value");
+            string middleName = driver.FindElement(By.Name("middlename")).GetAttribute("value");
             string lastName = driver.FindElement(By.Name("lastname")).GetAttribute("value");
+            string nickName = driver.FindElement(By.Name("nickname")).GetAttribute("value");
+            string company = driver.FindElement(By.Name("company")).GetAttribute("value");
+            string title = driver.FindElement(By.Name("title")).GetAttribute("value");
             string address = driver.FindElement(By.Name("address")).GetAttribute("value");
             string homePhone = driver.FindElement(By.Name("home")).GetAttribute("value");
             string mobilePhone = driver.FindElement(By.Name("mobile")).GetAttribute("value");
             string workPhone = driver.FindElement(By.Name("work")).GetAttribute("value");
+            string fax = driver.FindElement(By.Name("fax")).GetAttribute("value");
             string email = driver.FindElement(By.Name("email")).GetAttribute("value");
             string email2 = driver.FindElement(By.Name("email2")).GetAttribute("value");
             string email3 = driver.FindElement(By.Name("email3")).GetAttribute("value");
+            string homePage = driver.FindElement(By.Name("homepage")).GetAttribute("value");
 
             return new ContactData(firstName, lastName)
             {
+                MiddleName = middleName,
+                NickName = nickName,
+                Company = company,
+                Title = title,
                 Address = address,
                 HomePhone = homePhone,
                 MobilePhone = mobilePhone,
                 WorkPhone = workPhone,
+                Fax = fax,
                 Email = email,
                 Email2 = email2,
-                Email3 = email3
+                Email3 = email3,
+                Homepage = homePage
             };
         }
+
+        public ContactData GetContactInformationFromDetailsPage(int index)
+        {
+            manager.Navigator.OpenHomePage();
+
+            OpenContactDetailsPage(index);
+
+            string allContactDetails = driver.FindElement(By.Id("content")).Text;
+
+            return new ContactData()
+            {
+                AllDetails = allContactDetails
+            };
+        }
+
     }
 }

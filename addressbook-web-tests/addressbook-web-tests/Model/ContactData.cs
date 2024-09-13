@@ -7,17 +7,25 @@ namespace WebAddressbookTests
     {
         private string allPhones;
         private string allEmails;
+        private string allDetails;
 
         public string FirstName { get; set; }
+        public string MiddleName { get; set; }
         public string LastName { get; set; }
+        public string NickName { get; set; }
         public string Id { get; set; }
+        public string Company { get; set; }
+        public string Title { get; set; }
         public string Address { get; set; }
         public string HomePhone { get; set; }
         public string MobilePhone { get; set; }
         public string WorkPhone { get; set; }
+        public string Fax { get; set; }
         public string Email { get; set; }
         public string Email2 { get; set; }
         public string Email3 { get; set; }
+        public string Homepage { get; set; }
+
         public string AllPhones
         {
             get
@@ -28,7 +36,7 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    return (CleanupPhone(HomePhone) + CleanupPhone(MobilePhone) + CleanupPhone(WorkPhone)).Trim();
+                    return (Cleanup(HomePhone) + Cleanup(MobilePhone) + Cleanup(WorkPhone)).Trim();
                 }
             }
             set
@@ -55,15 +63,39 @@ namespace WebAddressbookTests
             }
         }
 
-        public string CleanupPhone(string phone)
+        public string AllDetails
         {
-            if (phone == null || phone == "")
+            get
+            {
+                if (allDetails != null)
+                {
+                    return allDetails;
+                }
+                else
+                {
+                    string info = FirstName + AddSpaceIfNotEmpty(MiddleName) + LastName.PadLeft(LastName.Length + 1) + AddSymbols(NickName) + CleanupDetails(Title) + CleanupDetails(Company) + CleanupDetails(Address) + AddInfo(HomePhone) + AddInfo(MobilePhone) + AddInfo(WorkPhone) + AddInfo(Fax) + AddSymbols(AllEmails) + AddInfo(Homepage).Trim();
+                    if (info == "" || info == " ")
+                    {
+                        return String.Empty;
+                    }
+                    return info;
+                }
+            }
+            set
+            {
+                allDetails = value;
+            }
+        }
+
+        public string Cleanup(string text)
+        {
+            if (text == null || text == "")
             {
                 return "";
             }
             else
             {
-                return Regex.Replace(phone, "[ -()]", "") + "\r\n";
+                return Regex.Replace(text, "[ -()]", "") + "\r\n";
             }
         }
 
@@ -79,10 +111,78 @@ namespace WebAddressbookTests
             }
         }
 
+        public string CleanupDetails(string text)
+        {
+            if (text == null || text == "")
+            {
+                return "";
+            }
+            else
+            {
+                return Regex.Replace(text, "[()]", "") + "\r\n";
+            }
+        }
+
+        public string AddSymbols(string text)
+        {
+            if (text == null || text == "")
+            {
+                return "";
+            }
+            else
+            {
+                return "\r\n" + text.Replace(" ", "") + "\r\n";
+            }
+        }
+
+        public string AddInfo(string text)
+        {
+            {
+                if (text == null || text == "")
+                {
+                    return "";
+                }
+                else if (text == HomePhone)
+                {
+                    return "\r\n" + "H: " + Cleanup(text);
+                }
+                else if (text == MobilePhone)
+                {
+                    return "M: " + Cleanup(text);
+                }
+                else if (text == WorkPhone)
+                {
+                    return "W: " + Cleanup(text);
+                }
+                else if (text == Homepage)
+                {
+                    return "Homepage:\r\n" + CleanupDetails(Homepage);
+                }
+                return "F: " + Cleanup(text); ;
+            }
+        }
+
+        public string AddSpaceIfNotEmpty(string text)
+        {
+            if (text == null || text == "")
+            {
+                return "";
+            }
+            else
+            {
+                return text.PadLeft(text.Length + 1);
+            }
+        }
+        
         public ContactData(string firstName, string lastName)
         {
             FirstName = firstName;
             LastName = lastName;
+        }
+
+        public ContactData()
+        {
+            AllDetails = allDetails;
         }
 
         public bool Equals(ContactData other)
