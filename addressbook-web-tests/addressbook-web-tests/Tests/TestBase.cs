@@ -29,5 +29,17 @@ namespace WebAddressbookTests
             }
             return builder.ToString();
         }
+
+        public static string GenerateRandomNumericString(int length)
+        {
+            StringBuilder builder = new StringBuilder(length);
+
+            for (int i = 0; i < length; i++)
+            {
+                builder.Append(rnd.Next(10));
+            }
+
+            return builder.ToString();
+        }
     }
 }
