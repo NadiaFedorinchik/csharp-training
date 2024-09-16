@@ -212,6 +212,12 @@ namespace WebAddressbookTests
                 return 1;
             }
 
+            int comparison = LastName.CompareTo(other.LastName);
+            if (comparison != 0)
+            {
+                return comparison;
+            }
+
             return FirstName.CompareTo(other.FirstName);
         }
     }
