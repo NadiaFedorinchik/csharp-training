@@ -73,17 +73,40 @@ namespace WebAddressbookTests
                 }
                 else
                 {
-                    string info = FirstName + AddSpaceIfNotEmpty(MiddleName) + LastName.PadLeft(LastName.Length + 1) + AddSymbols(NickName) + CleanupDetails(Title) + CleanupDetails(Company) + CleanupDetails(Address) + AddInfo(HomePhone) + AddInfo(MobilePhone) + AddInfo(WorkPhone) + AddInfo(Fax) + AddSymbols(AllEmails) + AddInfo(Homepage).Trim();
+                    string phones = AllPhones;
+                    string info = FirstName + AddSpaceIfNotEmpty(MiddleName) + LastName.PadLeft(LastName.Length + 1) + CleanupDetails(NickName) + CleanupDetails(Title) + CleanupDetails(Company) + CleanupDetails(Address) + AddInfo(HomePhone) + AddInfo(MobilePhone) + AddInfo(WorkPhone) + AddInfo(Fax) + AddSymbols(AllEmails) + AddInfo(Homepage).Trim();
                     if (info == "" || info == " ")
                     {
                         return String.Empty;
                     }
-                    return info;
+                    else if (info.IndexOf(LastName) + LastName.Length < info.Length)
+                    {
+                        if (phones != null || phones != "")
+                            {
+                                info = FirstName + AddSpaceIfNotEmpty(MiddleName) + LastName.PadLeft(LastName.Length + 1) + CleanupDetails(NickName) + CleanupDetails(Title) + CleanupDetails(Company) + CleanupDetails(Address) + "\r\n" + AddInfo(HomePhone) + AddInfo(MobilePhone) + AddInfo(WorkPhone) + AddInfo(Fax) + AddSymbols(AllEmails) + AddInfo(Homepage).Trim(); ;
+                            }
+                        info = info.Replace(LastName, LastName + "\r\n");
+                    }
+                    return RemoveTralingSymbols(info);
                 }
             }
             set
             {
                 allDetails = value;
+            }
+        }
+
+        private string RemoveTralingSymbols(string inputString)
+        {
+            {
+                if (inputString.EndsWith("\r\n"))
+                {
+                    return inputString.Substring(0, inputString.Length - 2);
+                }
+                else
+                {
+                    return inputString;
+                }
             }
         }
 
@@ -144,7 +167,7 @@ namespace WebAddressbookTests
                 }
                 else if (text == HomePhone)
                 {
-                    return "\r\n" + "H: " + Cleanup(text);
+                    return "H: " + Cleanup(text);
                 }
                 else if (text == MobilePhone)
                 {
