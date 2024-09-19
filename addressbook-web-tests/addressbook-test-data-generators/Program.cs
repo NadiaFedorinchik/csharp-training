@@ -1,4 +1,5 @@
-﻿using System.Xml.Serialization;
+﻿using Newtonsoft.Json;
+using System.Xml.Serialization;
 using WebAddressbookTests;
 
 namespace addressbook_test_data_generators
@@ -20,18 +21,22 @@ namespace addressbook_test_data_generators
                 });
             }
             if(format=="csv")
-            {
-                WriteGroupsToCsvFile(groups, writer);
-            }
-            else if(format == "xml")
-            {
-                WriteGroupsToXmlFile(groups, writer);
-            }
-            else
-            {
-                System.Console.Out.Write("Unrecognized fromat " + format);
-            }
-           
+                {
+                    WriteGroupsToCsvFile(groups, writer);
+                }
+                else if (format == "xml")
+                {
+                    WriteGroupsToXmlFile(groups, writer);
+                }
+                else if (format == "json")
+                {
+                    WriteGroupsToJsonFile(groups, writer);
+                }
+                else
+                {
+                    System.Console.Out.Write("Unrecognized fromat " + format);
+                }
+
             writer.Close();
         }
 
@@ -47,6 +52,11 @@ namespace addressbook_test_data_generators
         static void WriteGroupsToXmlFile(List<GroupData> groups, StreamWriter writer)
         {
             new XmlSerializer(typeof(List<GroupData>)).Serialize(writer, groups);
+        }
+
+        static void WriteGroupsToJsonFile(List<GroupData> groups, StreamWriter writer)
+        {
+            writer.Write(JsonConvert.SerializeObject(groups, Formatting.Indented));
         }
     }
 }
