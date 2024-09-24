@@ -83,7 +83,8 @@ namespace WebAddressbookTests
                     {
                         if (phones != null || phones != "")
                             {
-                                info = FirstName + AddSpaceIfNotEmpty(MiddleName) + LastName.PadLeft(LastName.Length + 1) + CleanupDetails(NickName) + CleanupDetails(Title) + CleanupDetails(Company) + CleanupDetails(Address) + "\r\n" + AddInfo(HomePhone) + AddInfo(MobilePhone) + AddInfo(WorkPhone) + AddInfo(Fax) + AddSymbols(AllEmails) + AddInfo(Homepage).Trim(); ;
+                                string correctedPhones = AddInfo(HomePhone) + AddInfo(MobilePhone) + AddInfo(WorkPhone) + AddInfo(Fax);
+                                info = FirstName + AddSpaceIfNotEmpty(MiddleName) + LastName.PadLeft(LastName.Length + 1) + CleanupDetails(NickName) + CleanupDetails(Title) + CleanupDetails(Company) + CleanupDetails(Address) + AddSymbolsIfNotEmpty(correctedPhones) + AddSymbols(AllEmails) + AddInfo(Homepage).Trim(); ;
                             }
                         info = info.Replace(LastName, LastName + "\r\n");
                     }
@@ -196,7 +197,19 @@ namespace WebAddressbookTests
                 return text.PadLeft(text.Length + 1);
             }
         }
-        
+
+        public string AddSymbolsIfNotEmpty(string text)
+        {
+            if (text == null || text == "")
+            {
+                return "";
+            }
+            else
+            {
+                return "\r\n" + text;
+            }
+        }
+
         public ContactData(string firstName, string lastName)
         {
             FirstName = firstName;
