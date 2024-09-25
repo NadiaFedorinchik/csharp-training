@@ -165,6 +165,7 @@
     <Compile Include="Model\AddressBookDB.cs" />
     <Compile Include="Model\AccountData.cs" />
     <Compile Include="AppManager\ApplicationManager.cs" />
+    <Compile Include="Tests\GroupTestBase.cs" />
     <Compile Include="Tests\AuthTestBase.cs" />
     <Compile Include="Tests\ContactInformationTests.cs" />
     <Compile Include="Tests\LoginTests.cs" />
