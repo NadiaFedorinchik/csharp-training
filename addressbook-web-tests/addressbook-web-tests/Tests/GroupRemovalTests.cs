@@ -11,15 +11,15 @@ namespace WebAddressbookTests
         {
             app.GroupHelper.CreateNewGroupIfZeroPresent();
 
-            List<GroupData> oldGroups = app.GroupHelper.GetGroupList();
-            
-            app.GroupHelper.Remove(0);
+            List<GroupData> oldGroups = GroupData.GetAll();
+            GroupData toBeRemoved = oldGroups[0];
+
+            app.GroupHelper.Remove(toBeRemoved);
 
             Assert.AreEqual(oldGroups.Count - 1, app.GroupHelper.GetGroupCount());
 
-            List<GroupData> newGroups = app.GroupHelper.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
 
-            GroupData toBeRemoved = oldGroups[0];
             oldGroups.RemoveAt(0);
             oldGroups.Sort();
             newGroups.Sort();

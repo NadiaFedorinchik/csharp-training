@@ -15,14 +15,14 @@ namespace WebAddressbookTests
 
             app.GroupHelper.CreateNewGroupIfZeroPresent();
 
-            List<GroupData> oldGroups = app.GroupHelper.GetGroupList();
+            List<GroupData> oldGroups = GroupData.GetAll();
             GroupData oldData = oldGroups[0];
 
-            app.GroupHelper.Modify(0, newData);
+            app.GroupHelper.Modify(oldData, newData);
 
             Assert.AreEqual(oldGroups.Count, app.GroupHelper.GetGroupCount());
 
-            List<GroupData> newGroups = app.GroupHelper.GetGroupList();
+            List<GroupData> newGroups = GroupData.GetAll();
             oldGroups[0].Name = newData.Name;
             oldGroups.Sort();
             newGroups.Sort();
