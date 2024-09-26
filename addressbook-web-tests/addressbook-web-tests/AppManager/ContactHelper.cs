@@ -1,4 +1,6 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using System;
 using System.Collections.Generic;
 
 namespace WebAddressbookTests
@@ -39,7 +41,7 @@ namespace WebAddressbookTests
         {
             manager.Navigator.OpenHomePage();
 
-            SelectContact(rowNumber);
+            SelectContactByRowNumber(rowNumber);
             RemoveContact();
             
             return this;
@@ -96,7 +98,7 @@ namespace WebAddressbookTests
             return this;
         }
 
-        public ContactHelper SelectContact(int rowNumber)
+        public ContactHelper SelectContactByRowNumber(int rowNumber)
         {
             driver.FindElement(By.XPath("//table[@id='maintable']/tbody/tr[" + rowNumber + "]/td[1]/input")).Click();
             
@@ -236,5 +238,39 @@ namespace WebAddressbookTests
             };
         }
 
+        public void AddContactToGroup(ContactData contact, GroupData group)
+        {
+            manager.Navigator.OpenHomePage();
+            ClearGroupFilter();
+            SelectContactById(contact.Id);
+            SelectGroupToAdd(group.Name);
+            SubmitAddingContactToGroup();
+
+            new WebDriverWait(driver, TimeSpan.FromSeconds(10))
+                .Until(d => d.FindElements(By.CssSelector("div.msgbox")).Count > 0);
+
+        }
+
+        public void SubmitAddingContactToGroup()
+        {
+            driver.FindElement(By.Name("add")).Click();
+        }
+
+        public void SelectGroupToAdd(string name)
+        {
+            new SelectElement(driver.FindElement(By.Name("to_group"))).SelectByText(name);
+        }
+
+        public void ClearGroupFilter()
+        {
+            new SelectElement(driver.FindElement(By.Name("group"))).SelectByText("[all]");
+        }
+
+        public ContactHelper SelectContactById(string contactId)
+        {
+            driver.FindElement(By.Id(contactId)).Click();
+
+            return this;
+        }
     }
 }

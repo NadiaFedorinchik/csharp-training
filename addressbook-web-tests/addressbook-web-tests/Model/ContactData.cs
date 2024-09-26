@@ -297,7 +297,7 @@ namespace WebAddressbookTests
         {
             using (AddressBookDB db = new AddressBookDB())
             {
-                return (from g in db.Contacts select g).ToList();
+                return (from c in db.Contacts select c).ToList();
             };
         }
     }
