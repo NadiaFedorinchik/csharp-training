@@ -10,17 +10,18 @@ namespace WebAddressbookTests
         [Test]
         public void ContactRemovalTest()
         {
-            List<ContactData> oldContacts = app.ContactHelper.GetContactList();
-
             app.ContactHelper.CreateNewContactIfZeroPresent();
 
-            app.ContactHelper.Remove(2);
+            List<ContactData> oldContacts = ContactData.GetAll();
+            ContactData toBeRemoved = oldContacts[0];
+
+
+            app.ContactHelper.Remove(toBeRemoved);
 
             Assert.AreEqual(oldContacts.Count - 1, app.ContactHelper.GetContactCount());
 
-            List<ContactData> newContacts = app.ContactHelper.GetContactList();
-            
-            ContactData toBeRemoved = oldContacts[0];
+            List<ContactData> newContacts = ContactData.GetAll();
+
             oldContacts.RemoveAt(0);
             oldContacts.Sort();
             newContacts.Sort();
