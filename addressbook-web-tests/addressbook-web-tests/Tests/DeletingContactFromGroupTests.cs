@@ -11,6 +11,23 @@ namespace WebAddressbookTests
         [Test]
         public void DeletingContactFromGroup()
         {
+
+            List<ContactData> existingContacts = ContactData.GetAll();
+            if (existingContacts == null || existingContacts.Count == 0)
+            {
+                app.ContactHelper.Create(new ContactData("James", "Cameron"));
+            }
+
+            List<GroupData> existingGroups = GroupData.GetAll();
+            if (existingGroups == null || existingGroups.Count == 0)
+            {
+                GroupData newGroup = new GroupData("a");
+                newGroup.Header = "b";
+                newGroup.Footer = "c";
+
+                app.GroupHelper.Create(newGroup);
+            }
+
             GroupData group = GroupData.GetAll()[0];
             List<ContactData> oldList = group.GetContacts();
             
