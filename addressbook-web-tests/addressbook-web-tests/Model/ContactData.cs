@@ -264,7 +264,8 @@ namespace WebAddressbookTests
             if (Object.ReferenceEquals(this, other)) return true;
 
             return FirstName == other.FirstName
-                && LastName == other.LastName;
+                && LastName == other.LastName
+                && Id == other.Id;
         }
 
         public override int GetHashCode()
