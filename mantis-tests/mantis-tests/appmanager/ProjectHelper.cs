@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace mantis_tests
 {
@@ -17,6 +18,52 @@ namespace mantis_tests
             FillProjectForm(project);
             SubmitProjectCreation();
             project.Id = GetProjectIdByName(project.Name);
+        }
+
+        internal void Delete(ProjectData project)
+        {
+            OpenManagePage();
+            SelectProjectTab();
+            SelectProjectById(project.Id);
+            SubmitProjectDeletion();
+            Thread.Sleep(5000);
+            ConfirmProjectDeletion();
+        }
+
+        private void SelectProjectById(int id)
+        {
+            string selector = $"a[href='manage_proj_edit_page.php?project_id={id}']";
+            manager.Driver.FindElement(By.CssSelector(selector)).Click();
+        }
+
+        private void ConfirmProjectDeletion()
+        {
+            manager.Driver.FindElement(By.CssSelector(".btn.btn-primary.btn-white.btn-round")).Click();
+        }
+
+        private void SubmitProjectDeletion()
+        {
+            manager.Driver.FindElement(By.XPath("//*[@id=\"manage-proj-update-form\"]/div/div[3]/button[2]")).Click();
+            projectCache = null;
+        }
+
+        public void CreateNewProjectIfZeroPresent()
+        {
+            if (!IsAtLeastOneProjectPresent())
+            {
+                ProjectData project = new ProjectData(TestBase.GenerateRandomString(10));
+
+                Create(project);
+            }
+        }
+
+        public bool IsAtLeastOneProjectPresent()
+        {
+            if (GetProjectCount() > 1)
+            {
+                return true;
+            }
+            return false;
         }
 
         private void SubmitProjectCreation()
@@ -37,7 +84,14 @@ namespace mantis_tests
 
         private void OpenManagePage()
         {
-            manager.Driver.FindElement(By.CssSelector("#sidebar > ul > li:nth-child(7) > a")).Click();
+            if (!IsAtLeastOneProjectPresent())
+            {
+                manager.Driver.FindElement(By.CssSelector("#sidebar > ul > li:nth-child(6) > a")).Click();
+            }
+            else
+            {
+                manager.Driver.FindElement(By.CssSelector("#sidebar > ul > li:nth-child(7) > a")).Click();
+            }
         }
 
         internal int GetProjectCount()
@@ -58,7 +112,6 @@ namespace mantis_tests
                 {
                     string href = element.GetAttribute("href");
                     int projectId = int.Parse(href.Substring(href.LastIndexOf('=') + 1));
-                    string projectName = element.GetAttribute("innerText");
                     projectCache.Add(new ProjectData(element.GetAttribute("innerText"))
                     {
                         Id = projectId

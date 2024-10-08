@@ -121,6 +121,7 @@
     <Compile Include="model\ProjectData.cs" />
     <Compile Include="model\AccountData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="tests\ProjectDeletionTests.cs" />
     <Compile Include="tests\ProjectCreationTests.cs" />
     <Compile Include="tests\AuthTestBase.cs" />
     <Compile Include="tests\TestBase.cs" />
