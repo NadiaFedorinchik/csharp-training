@@ -9,23 +9,26 @@ namespace mantis_tests
     {
         public RegistrationHelper registration { get; set; }
         public FtpHelper ftp { get; set; }
+        public LoginHelper auth { get { return loginHelper; } }
+        public ProjectHelper project { get { return projectHelper; } }
 
-        private IWebDriver driver;
-        private string baseURL;
+        protected IWebDriver driver;
+        protected string baseURL;
+        protected LoginHelper loginHelper;
+        protected ProjectHelper projectHelper;
 
         private static ThreadLocal<ApplicationManager> app = new ThreadLocal<ApplicationManager>();
 
-        public ApplicationManager() 
+        private ApplicationManager()
         {
-
             FirefoxOptions options = new FirefoxOptions();
             options.BinaryLocation = ("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
             registration = new RegistrationHelper(this);
-            driver = new FirefoxDriver(options);
+            loginHelper = new LoginHelper(this);
+            projectHelper = new ProjectHelper(this);
+            //driver = new FirefoxDriver(options);
             baseURL = "http://localhost";
             ftp = new FtpHelper(this);
-
-            Console.WriteLine("WebDriver создан успешно");
         }
 
         ~ApplicationManager()
@@ -51,11 +54,29 @@ namespace mantis_tests
             return app.Value;
         }
 
-        public IWebDriver Driver 
-        { get { return driver; } }
-
         public string BaseURL
         {
             get { return baseURL; } }
+
+        public IWebDriver Driver
+        {
+            get
+            {
+                if (driver == null)
+                {
+                    lock (this)
+                    {
+                        if (driver == null)
+                        {
+                            driver = new FirefoxDriver(new FirefoxOptions()
+                            {
+                                BinaryLocation = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
+                            });
+                        }
+                    }
+                }
+                return driver;
+            }
+        }
     }
 }

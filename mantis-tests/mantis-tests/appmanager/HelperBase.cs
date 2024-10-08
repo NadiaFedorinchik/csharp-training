@@ -17,9 +17,9 @@ namespace mantis_tests
         {
             if (text != null)
             {
-                driver.FindElement(locator).Click();
-                driver.FindElement(locator).Clear();
-                driver.FindElement(locator).SendKeys(text);
+                manager.Driver.FindElement(locator).Click();
+                manager.Driver.FindElement(locator).Clear();
+                manager.Driver.FindElement(locator).SendKeys(text);
             }
         }
 
@@ -27,7 +27,7 @@ namespace mantis_tests
         {
             try
             {
-                driver.FindElement(by);
+                manager.Driver.FindElement(by);
                 return true;
             }
             catch (NoSuchElementException)

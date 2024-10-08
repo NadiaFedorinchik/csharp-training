@@ -8,7 +8,7 @@ namespace WebAddressbookTests
         [SetUp]
         public void SetupLogin()
         {
-            app.Auth.Login(new AccountData("admin", "secret"));
+            app.Auth.Login(new AccountData("administrator", "P@ssw0rd"));
         }
     }
 }
