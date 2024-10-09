@@ -9,6 +9,7 @@ namespace mantis_tests
     {
         public RegistrationHelper registration { get; set; }
         public FtpHelper ftp { get; set; }
+        public APIHelper API { get; set; }
         public LoginHelper auth { get { return loginHelper; } }
         public ProjectHelper project { get { return projectHelper; } }
 
@@ -22,13 +23,14 @@ namespace mantis_tests
         private ApplicationManager()
         {
             FirefoxOptions options = new FirefoxOptions();
-            options.BinaryLocation = ("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
+            options.BrowserExecutableLocation = ("C:\\Program Files\\Mozilla Firefox\\firefox.exe");
             registration = new RegistrationHelper(this);
             loginHelper = new LoginHelper(this);
             projectHelper = new ProjectHelper(this);
             //driver = new FirefoxDriver(options);
-            baseURL = "http://localhost";
+            baseURL = "http://localhost/mantisbt-2.27.0";
             ftp = new FtpHelper(this);
+            API = new APIHelper(this);
         }
 
         ~ApplicationManager()
@@ -48,7 +50,7 @@ namespace mantis_tests
             if (! app.IsValueCreated)
             {
                 ApplicationManager newInstance = new ApplicationManager();
-                newInstance.driver.Url = "http://localhost/mantisbt-2.27.0/login_page.php";
+                newInstance.driver.Url = newInstance.baseURL + "/login_page.php";
                 app.Value = newInstance;
             }
             return app.Value;
@@ -70,7 +72,7 @@ namespace mantis_tests
                         {
                             driver = new FirefoxDriver(new FirefoxOptions()
                             {
-                                BinaryLocation = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
+                                BrowserExecutableLocation = "C:\\Program Files\\Mozilla Firefox\\firefox.exe"
                             });
                         }
                     }
